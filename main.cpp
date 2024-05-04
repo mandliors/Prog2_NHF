@@ -37,11 +37,6 @@ int main()
             BeginShaderMode(defaultShader);
                 DrawTextureRec(target.texture, Rectangle{ 0, 0, (float)target.texture.width, (float)-target.texture.height }, Vector2{ 0.0f, 0.0f }, WHITE);
             EndShaderMode();
-            char buffer[10];
-            sprintf(buffer, "%d coins", world.GetMainPlayer()->GetCoinCount());
-            DrawText(buffer, 10, 70, 40, YELLOW);
-            sprintf(buffer, "%d fps", GetFPS());
-            DrawText(buffer, GetScreenWidth() - 150, 20, 40, YELLOW);
         EndDrawing();
     }
 

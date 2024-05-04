@@ -104,6 +104,13 @@ void World::Draw() const
 
     // draw player
     MainPlayer->Draw();
+
+    // draw stats
+    char buffer[10];
+    sprintf(buffer, "%d coins", MainPlayer->GetCoinCount());
+    DrawText(buffer, 10, 70, 40, YELLOW);
+    sprintf(buffer, "%d fps", GetFPS());
+    DrawText(buffer, GetScreenWidth() - 150, 20, 40, YELLOW);
 }
 
 static Utils::Vec2d GenerateRandomPositionForEnemy()
