@@ -1,8 +1,11 @@
 #include "ParticleSystem.h"
 
+#ifndef CPORTA
 #include <raylib.h>
+#endif
 #include <algorithm>
 
+static int GetRandom(int min, int max);
 static double Lerp(double a, double b, double t);
 
 ParticleSystem::ParticleSystem() : Particles() {}
@@ -11,8 +14,8 @@ void ParticleSystem::Emit(const Utils::Vec2d& position, const Utils::Vec2d& dire
 {
     for (int i = 0; i < count; i++)
     {
-        double angle = direction.GetAngle() + GetRandomValue((int)-randomAngle, (int)randomAngle);
-        double speed = GetRandomValue(100, 200);
+        double angle = direction.GetAngle() + GetRandom((int)-randomAngle, (int)randomAngle);
+        double speed = GetRandom(100, 200);
         Utils::Vec2d velocity = Utils::Vec2d::FromAngle(angle) * speed;
         Particles.emplace_back(position, velocity, lifetime, startColor, endColor, startSize, endSize);
     }
@@ -44,13 +47,13 @@ void ParticleSystem::Particle::Update(double dt)
 }
 void ParticleSystem::Particle::Draw() const
 {
+#ifndef CPORTA
     double t = Age / Lifetime;
     Col color = StartColor.Lerp(EndColor, t);
     double size = Lerp(StartSize, EndSize, t);
     DrawRectanglePro({ (float)Position.GetX(), (float)Position.GetY(), (float)size, (float)size }, { 0.0f, 0.0f }, 0, color);
+#endif
 }
 
-static double Lerp(double a, double b, double t)
-{
-    return a + (b - a) * t;
-}
+static int GetRandom(int min, int max) { return min + rand() % (max - min + 1); }
+static double Lerp(double a, double b, double t) { return a + (b - a) * t; }

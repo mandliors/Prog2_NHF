@@ -13,6 +13,7 @@ void LargeEnemy::Update(double dt)
 }
 void LargeEnemy::Draw() const
 {
+#ifndef CPORTA
     // draw enemy
     Texture2D& texture = *AssetManager::GetTexture(AssetManager::TextureType::LARGE_ENEMY);
     DrawRectanglePro({ (float)Position.GetX() + 10.0f, (float)Position.GetY() + 10.0f, (float)Size, (float)Size }, { (float)Size * 0.5f, (float)Size * 0.5f }, (float)Rotation, { 0, 0, 0, 210 });
@@ -22,4 +23,5 @@ void LargeEnemy::Draw() const
     // draw health bar
     if (Health < MaxHealth)
         DrawHealthBar(Position - Utils::Vec2d(0.0, Size * 0.5 + 25.0), Utils::Vec2d(120.0, 10.0));
+#endif
 }

@@ -12,6 +12,7 @@ const double Player::BulletSpeed = 1000.0;
 
 void Player::Update(double dt)
 {
+#ifndef CPORTA
     int horizontalMovement = IsKeyDown(KEY_D) - IsKeyDown(KEY_A);
     int verticalMovement = IsKeyDown(KEY_S) - IsKeyDown(KEY_W);
     double moveForce = MoveForce;
@@ -33,9 +34,11 @@ void Player::Update(double dt)
 
     GameObject::Update(dt);
     Fume.Update(dt);
+#endif
 }
 void Player::Draw() const
 {
+#ifndef CPORTA
     // draw fume
     Fume.Draw();
 
@@ -50,6 +53,7 @@ void Player::Draw() const
 
     // draw health bar
     DrawHealthBar(Utils::Vec2d(90.0, 30.0), Utils::Vec2d(160.0, 40.0));
+#endif
 }
 
 void Player::Shoot() const

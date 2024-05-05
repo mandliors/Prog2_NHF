@@ -1,3 +1,5 @@
+#ifndef CPORTA
+
 #ifndef ASSET_MANAGER_H
 #define ASSET_MANAGER_H
 
@@ -16,5 +18,7 @@ namespace AssetManager {
     Texture2D* GetTexture(TextureType asset);
 }
 
+
+#endif
 
 #endif

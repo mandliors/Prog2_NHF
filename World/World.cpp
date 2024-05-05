@@ -7,7 +7,9 @@
 
 #include <algorithm>
 
+#ifndef CPORTA
 static Utils::Vec2d GenerateRandomPositionForEnemy();
+#endif
 
 World::World()
 {
@@ -32,8 +34,11 @@ void World::Update(double dt)
 #endif
 
     // update player
-    MainPlayer->Update(GetFrameTime());
+    MainPlayer->Update(dt);
+
+#ifndef CPORTA
     MainPlayer->LookAt(Utils::Vector2ToVec2(GetMousePosition()));
+#endif
 
     // update enemies
     for (auto& e : Enemies)
@@ -92,6 +97,7 @@ void World::Update(double dt)
 }
 void World::Draw() const
 {
+#ifndef CPORTA
     // draw collectables
     for (const auto& c : Collectables)
         c->Draw();
@@ -116,8 +122,10 @@ void World::Draw() const
 
     if (!MainPlayer->IsAlive())
         DrawText("Game Over", GetScreenWidth() / 2 - 180, GetScreenHeight() / 2 - 50, 60, RED);
+#endif
 }
 
+#ifndef CPORTA
 static Utils::Vec2d GenerateRandomPositionForEnemy()
 {
     // above/below or left/right of the screen
@@ -138,3 +146,4 @@ static Utils::Vec2d GenerateRandomPositionForEnemy()
             return Utils::Vec2d(GetScreenWidth() + 50, rand() % GetScreenHeight());
     }
 }
+#endif

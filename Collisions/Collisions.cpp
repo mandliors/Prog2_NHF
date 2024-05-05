@@ -1,6 +1,22 @@
 #include "Collisions.h"
 
+#ifndef CPORTA
 #include <raylib.h>
+#else
+typedef struct Rectangle {
+    float x;                // Rectangle top-left corner position x
+    float y;                // Rectangle top-left corner position y
+    float width;            // Rectangle width
+    float height;           // Rectangle height
+} Rectangle;
+
+bool CheckCollisionRecs(Rectangle rec1, Rectangle rec2)
+{
+    if (rec1.x + rec1.width < rec2.x || rec1.x > rec2.x + rec2.width) return false;
+    if (rec1.y + rec1.height < rec2.y || rec1.y > rec2.y + rec2.height) return false;
+    return true;
+}
+#endif
 
 bool CheckCollision(const Player& player, const Collectable& collectable)
 {

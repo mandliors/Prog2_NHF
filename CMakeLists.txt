@@ -26,6 +26,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(${PROJECT_NAME})
 target_sources(${PROJECT_NAME} 
     PRIVATE
+        main.cpp
+        test_main.cpp
         AssetManager/AssetManager.cpp
         Bullets/Bullet.cpp
         Bullets/CircleBullet.cpp
@@ -42,14 +44,8 @@ target_sources(${PROJECT_NAME}
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 
-if(CPORTA)
-    target_sources(${PROJECT_NAME} PRIVATE test_main.cpp)
-    #target_link_libraries(${PROJECT_NAME} PRIVATE GTest::gtest_main)
-else()
-    target_sources(${PROJECT_NAME} PRIVATE main.cpp)
-endif()
+#target_link_libraries(${PROJECT_NAME} PRIVATE GTest::gtest_main)
 
 target_compile_options(${PROJECT_NAME} 
 PRIVATE
@@ -62,6 +58,8 @@ PRIVATE
 )
 if(CPORTA)
     target_compile_options(${PROJECT_NAME} PRIVATE -DCPORTA)
+else()
+    target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")

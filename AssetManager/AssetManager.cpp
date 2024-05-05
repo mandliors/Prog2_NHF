@@ -1,3 +1,5 @@
+#ifndef CPORTA
+
 #include "AssetManager.h"
 
 namespace AssetManager {
@@ -20,3 +22,5 @@ namespace AssetManager {
         return &textures[(int)asset];
     }
 }
+
+#endif

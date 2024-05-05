@@ -1,3 +1,5 @@
+#ifdef CPORTA
+
 #include <ctime>
 #include <gtest_lite.h>
 
@@ -115,3 +117,5 @@ int main()
 
     return 0;
 }
+
+#endif

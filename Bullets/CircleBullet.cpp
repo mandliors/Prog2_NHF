@@ -6,5 +6,7 @@ const Col CircleBullet::Color = Col(0, 255, 40);
 
 void CircleBullet::Draw() const
 {
+#ifndef CPORTA
     DrawCircle((int)Position.GetX(), (int)Position.GetY(), Radius, Color);
+#endif
 }

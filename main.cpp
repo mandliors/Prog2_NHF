@@ -1,3 +1,5 @@
+#ifndef CPORTA
+
 #include <raylib.h>
 #include <ctime>
 
@@ -50,3 +52,5 @@ int main()
 
     return 0;
 }
+
+#endif

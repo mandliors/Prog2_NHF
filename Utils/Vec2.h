@@ -1,7 +1,13 @@
 #ifndef VEC2_H
 #define VEC2_H
 
-#include <raylib.h>
+#ifndef CPORTA
+    #include <raylib.h>
+#else
+    #define PI 3.14159265358979323846f
+    #define DEG2RAD (PI/180.0f)
+    #define RAD2DEG (180.0f/PI)
+#endif
 #include <iostream>
 #include <math.h>
 
@@ -76,7 +82,9 @@ namespace Utils
             Y /= other;
             return *this;
         }
-        operator Vector2() const { return Vector2{ (float)X, (float)Y }; }
+        #ifndef CPORTA
+            operator Vector2() const { return Vector2{ (float)X, (float)Y }; }
+        #endif
 
     public:
         static Vec2 FromAngle(double angle) { return Vec2(cos(angle * DEG2RAD), sin(angle * DEG2RAD)); }
@@ -102,7 +110,9 @@ namespace Utils
     typedef Vec2<int> Vec2i;
     typedef Vec2<double> Vec2d;
 
+#ifndef CPORTA
     Vec2d Vector2ToVec2(const Vector2& vec);
+#endif
 }
 
 #endif
