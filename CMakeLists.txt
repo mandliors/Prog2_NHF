@@ -23,6 +23,27 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # )
 # FetchContent_MakeAvailable(googletest)
 
+# Dependencies
+if(NOT CPORTA)
+    set(RAYLIB_VERSION 5.0)
+    find_package(raylib ${RAYLIB_VERSION} QUIET) # QUIET or REQUIRED
+    if (NOT raylib_FOUND) # If there's none, fetch and build raylib
+    include(FetchContent)
+    FetchContent_Declare(
+        raylib
+        DOWNLOAD_EXTRACT_TIMESTAMP OFF
+        URL https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
+    )
+    FetchContent_GetProperties(raylib)
+    if (NOT raylib_POPULATED) # Have we downloaded raylib yet?
+        set(FETCHCONTENT_QUIET NO)
+        FetchContent_Populate(raylib)
+        set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE) # don't build the supplied examples
+        add_subdirectory(${raylib_SOURCE_DIR} ${raylib_BINARY_DIR})
+    endif()
+    endif()
+endif()
+
 add_executable(${PROJECT_NAME})
 target_sources(${PROJECT_NAME} 
     PRIVATE
@@ -44,7 +65,6 @@ target_sources(${PROJECT_NAME}
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-
 #target_link_libraries(${PROJECT_NAME} PRIVATE GTest::gtest_main)
 
 target_compile_options(${PROJECT_NAME} 
@@ -54,7 +74,6 @@ PRIVATE
         -Wextra
         -Wpedantic
         -Wconversion
-        -lGL -lm -lpthread -ldl -lrt -lX11
 )
 if(CPORTA)
     target_compile_options(${PROJECT_NAME} PRIVATE -DCPORTA)

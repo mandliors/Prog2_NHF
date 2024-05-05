@@ -25,7 +25,11 @@ public:
     virtual void Draw() const = 0;
 
 protected:
+#ifndef CPORTA
     void DrawHealthBar(const Utils::Vec2d& position, const Utils::Vec2d& size) const;
+#else
+    void DrawHealthBar() const;
+#endif
 
 protected:
     World* WorldPtr;

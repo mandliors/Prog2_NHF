@@ -32,9 +32,9 @@ void Player::Update(double dt)
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         Shoot();
 
+#endif
     GameObject::Update(dt);
     Fume.Update(dt);
-#endif
 }
 void Player::Draw() const
 {

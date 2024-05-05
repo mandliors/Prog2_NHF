@@ -6,7 +6,9 @@
 #include <algorithm>
 
 static int GetRandom(int min, int max);
+#ifndef CPORTA
 static double Lerp(double a, double b, double t);
+#endif
 
 ParticleSystem::ParticleSystem() : Particles() {}
 
@@ -56,4 +58,6 @@ void ParticleSystem::Particle::Draw() const
 }
 
 static int GetRandom(int min, int max) { return min + rand() % (max - min + 1); }
+#ifndef CPORTA
 static double Lerp(double a, double b, double t) { return a + (b - a) * t; }
+#endif
