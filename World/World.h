@@ -14,6 +14,8 @@ class World
 public:
     World();
 
+    void AddCollectable(std::unique_ptr<Collectable> collectable) { Collectables.push_back(std::move(collectable)); }
+    void AddEnemy(std::unique_ptr<Enemy> enemy) { Enemies.push_back(std::move(enemy)); }
     void AddBullet(std::unique_ptr<Bullet> bullet) { Bullets.push_back(std::move(bullet)); }
 
     void Update(double dt);

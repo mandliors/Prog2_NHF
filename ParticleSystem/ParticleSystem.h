@@ -12,6 +12,7 @@ public:
     ParticleSystem();
     ~ParticleSystem() = default;
 
+    size_t GetParticleCount() const { return Particles.size(); }
     void Emit(const Utils::Vec2d& position, const Utils::Vec2d& direction, double randomAngle, double lifetime, const Col& startColor, const Col& endColor, double startSize, double endSize, int count);
     
     void Update(double dt);

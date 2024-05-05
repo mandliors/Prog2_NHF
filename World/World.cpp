@@ -16,16 +16,20 @@ World::World()
 
 void World::Update(double dt)
 {
+    if (!MainPlayer->IsAlive()) return;
+
+#ifndef CPORTA
     // generate coins and enemies every second (but not always)
     static double timer = 0.0;
     timer += dt;
     if (timer > 1.0)
     {
-        if (rand() % 5 == 0) Enemies.push_back(std::make_unique<LargeEnemy>(this, GenerateRandomPositionForEnemy()));
-        else Enemies.push_back(std::make_unique<SmallEnemy>(this, GenerateRandomPositionForEnemy()));
-        if (rand() % 4 == 0) Collectables.push_back(std::make_unique<Coin>(this, Utils::Vec2d(rand() % GetScreenWidth(), rand() % GetScreenHeight())));
+        if (rand() % 5 == 0) AddEnemy(std::make_unique<LargeEnemy>(this, GenerateRandomPositionForEnemy()));
+        else AddEnemy(std::make_unique<SmallEnemy>(this, GenerateRandomPositionForEnemy()));
+        if (rand() % 4 == 0) AddCollectable(std::make_unique<Coin>(this, Utils::Vec2d(rand() % GetScreenWidth(), rand() % GetScreenHeight())));
         timer = 0.0;
     }
+#endif
 
     // update player
     MainPlayer->Update(GetFrameTime());
@@ -85,8 +89,6 @@ void World::Update(double dt)
     std::erase_if(Collectables, [](const auto& c) { return c->IsCollected(); });
     std::erase_if(Bullets, [](const auto& b) { return !b->IsAlive(); });
     std::erase_if(Enemies, [](const auto& e) { return !e->IsAlive(); });
-    if (!MainPlayer->IsAlive())
-        exit(0);
 }
 void World::Draw() const
 {
@@ -111,6 +113,9 @@ void World::Draw() const
     DrawText(buffer, 10, 70, 40, YELLOW);
     sprintf(buffer, "%d fps", GetFPS());
     DrawText(buffer, GetScreenWidth() - 150, 20, 40, YELLOW);
+
+    if (!MainPlayer->IsAlive())
+        DrawText("Game Over", GetScreenWidth() / 2 - 180, GetScreenHeight() / 2 - 50, 60, RED);
 }
 
 static Utils::Vec2d GenerateRandomPositionForEnemy()
